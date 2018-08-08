@@ -1,4 +1,4 @@
-package com.packt.controller;
+package com.packt.webstore.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,6 @@ public class HomeController {
     public String welcome(Model model) {
         model.addAttribute("greeting", "Witaj w sklepie internetowym!");
         model.addAttribute("tagline", "Wyjątkowym i jedynym sklepie internetowym");
-
         return "welcome";
     }
 }
