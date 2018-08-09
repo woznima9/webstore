@@ -5,8 +5,7 @@ import com.packt.webstore.domain.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
@@ -20,6 +19,12 @@ public class InMemoryProductRepository implements ProductRepository {
         iphone.setCategory("smartfon");
         iphone.setManufacturer("Apple");
         iphone.setUnitsInStock(1000);
+
+        Product huawei = new Product("P1237", "Huawei", new BigDecimal(1300.25));
+        huawei.setDescription("Huawei P10 Light, smartfon z 5-calowym ekranem o rozdzielczości 333×444 i najlepszym 18-megapikselowym aparatem");
+        huawei.setCategory("smartfon");
+        huawei.setManufacturer("Huawei");
+        huawei.setUnitsInStock(300);
 
         Product laptop_dell = new Product("P1235", "Dell Inspiron", new BigDecimal(700));
         laptop_dell.setDescription("Dell Inspiron, 14-calowy laptop (czarny) z procesorami Intel Core 3. generacji");
@@ -36,6 +41,7 @@ public class InMemoryProductRepository implements ProductRepository {
         listOfProducts.add(iphone);
         listOfProducts.add(laptop_dell);
         listOfProducts.add(tablet_Nexus);
+        listOfProducts.add(huawei);
     }
 
 
@@ -58,5 +64,43 @@ public class InMemoryProductRepository implements ProductRepository {
             throw new IllegalArgumentException("Brak produktu o wskazanym id:" + productId);
         }
         return productById;
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String category) {
+        List<Product> productsByCategory = new ArrayList<>();
+        for (Product p : listOfProducts) {
+            if (category.equalsIgnoreCase(p.getCategory())) {
+                productsByCategory.add(p);
+            }
+        }
+        return productsByCategory;
+    }
+
+    public Set<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+        Set<Product> productsByBrand = new HashSet<Product>();
+        Set<Product> productsByCategory = new HashSet<Product>();
+
+        Set<String> criterias = filterParams.keySet();
+
+        if (criterias.contains("brand")) {
+            for (String brandName : filterParams.get("brand")) {
+                for (Product product : listOfProducts) {
+                    if (brandName.equalsIgnoreCase(product.getManufacturer())) {
+                        productsByBrand.add(product);
+                    }
+                }
+            }
+        }
+
+        if (criterias.contains("category")) {
+            for (String category : filterParams.get("category")) {
+                productsByCategory.addAll(this.getProductsByCategory(category));
+            }
+        }
+
+        productsByCategory.retainAll(productsByBrand);
+
+        return productsByCategory;
     }
 }

@@ -10,9 +10,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping("/order/P1234/2")
+    @RequestMapping("/order/P1237/2")
     public String process() {
-        orderService.processOrder("P1234", 2);
+        orderService.processOrder("P1237", 5);
         return "redirect:/products";
     }
 }
