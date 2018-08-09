@@ -3,7 +3,7 @@ package com.packt.webstore.domain;
 import java.math.BigDecimal;
 
 public class Product {
-    private String productId;
+    private String productId;   //? dlaczego w tym przykładzie wygodniej jest, że productId jest stringiem?
     private String name;
     private BigDecimal unitPrice;
     private String description;
