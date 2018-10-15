@@ -45,15 +45,13 @@ public class ProductController {
 
     @RequestMapping("/filter/{ByCriteria}")
     public String getProductsByFilter(@MatrixVariable(pathVar = "ByCriteria") Map<String, List<String>> filterParams, Model model) {
-        model.addAttribute("prodacts", productService.getProductsByFilter(filterParams));
+        model.addAttribute("products", productService.getProductsByFilter(filterParams));
         return "products";
     }
 
     @RequestMapping("/product")
     public String getProductsById(@RequestParam("id") String productId, Model model) {
-
-        System.out.println("Jestem w product by Id");
-        System.out.println(productService.getProductById(productId));
+        System.out.println("Jestem w product by Id" + productService.getProductById(productId));
         model.addAttribute("product", productService.getProductById(productId));
         return "product";
     }

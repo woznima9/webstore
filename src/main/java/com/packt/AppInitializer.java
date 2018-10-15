@@ -20,7 +20,7 @@ package com.packt;
 //}
 
 //poniżej uproszczona konfiguracja z wykorzystaniem klasy abstrakcyjnej
-
+// updatet to C:\Users\Komp\IdeaProjects\SharedWithGitHub\webstore
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
